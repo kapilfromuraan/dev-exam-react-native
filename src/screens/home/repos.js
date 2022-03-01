@@ -8,8 +8,9 @@ import Loader from '../../components/loader';
 import { PeopleIcon } from '../../assets/svgs';
 import fonts from '../../constants/fonts';
 import RepositoryCard from '../../components/repo-card';
+import Header from '../../components/header';
 
-const Repos = ({ route }) => {
+const Repos = ({ navigation, route }) => {
 
     const { username } = route.params;
     const [owner, setOwner] = useState(null);
@@ -69,6 +70,7 @@ const Repos = ({ route }) => {
 
     return (
         <SafeAreaContainer>
+            <Header heading={username} />
             <View style={styles.container}>
                 {loading ? <Loader /> :
                     owner ?
@@ -78,7 +80,7 @@ const Repos = ({ route }) => {
                             ListHeaderComponent={<><Profile /><TextLarge containerStyle={{ marginVertical: 20 }} align='left'>Repositories</TextLarge></>}
                             data={repos}
                             keyExtractor={(item) => item.id}
-                            renderItem={({ item }) => <RepositoryCard repo={item} />}
+                            renderItem={({ item }) => <RepositoryCard navigation={navigation} repo={item} />}
                             ListEmptyComponent={<TextMedium>No Repositories added</TextMedium>}
                         />
                         : <TextMedium containerStyle={{ marginVertical: 40 }}>User not found with this username</TextMedium>
@@ -89,7 +91,7 @@ const Repos = ({ route }) => {
 }
 
 const styles = StyleSheet.create({
-    container: { flex: 1, backgroundColor: colors.black, paddingHorizontal: 20 }
+    container: { flex: 1, backgroundColor: colors.black, paddingHorizontal: 20, paddingTop: 10 }
 })
 
 export default Repos;

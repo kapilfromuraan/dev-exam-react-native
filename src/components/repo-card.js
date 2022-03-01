@@ -2,15 +2,16 @@ import React, { useMemo } from 'react';
 import { Platform, StyleSheet, View } from "react-native";
 import { CodeIcon } from '../assets/svgs';
 import colors from '../constants/colors';
+import routes from '../constants/routes';
 import Row from '../containers/row';
 import moment from 'moment';
 import { TextMedium, TextSmall } from "./text";
 
-const RepositoryCard = ({ repo }) => useMemo(() => {
+const RepositoryCard = ({ repo, navigation }) => useMemo(() => {
     return (
         <View style={styles.container}>
-            <TextMedium style={{ color: colors.white }} align='left'>{repo.name}</TextMedium>
-            <TextSmall containerStyle={{ marginTop: Platform.OS === 'ios' ? 5 : 0 }} style={{ color: colors.textGray }} align='left'>{repo.description}</TextSmall>
+            <TextMedium onPress={() => navigation.navigate(routes.readMe, {repo: repo.full_name})} style={{ color: colors.blue }} align='left'>{repo.name}</TextMedium>
+            {repo.description ? <TextSmall containerStyle={{ marginTop: Platform.OS === 'ios' ? 5 : 0 }} style={{ color: colors.textGray }} align='left'>{repo.description}</TextSmall> : null}
             <Row style={{ marginTop: 10 }}>
                 {repo.language ? <Row>
                     <CodeIcon height={15} width={15} />
@@ -20,7 +21,7 @@ const RepositoryCard = ({ repo }) => useMemo(() => {
             </Row>
         </View>
     );
-}, [repo])
+}, [repo, navigation])
 
 const styles = StyleSheet.create({
     container: { borderWidth: 1, borderColor: colors.gray, borderRadius: 6, marginBottom: 10, paddingHorizontal: 15, paddingVertical: 10 }

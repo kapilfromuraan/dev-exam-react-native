@@ -6,6 +6,7 @@ import { StatusBar } from 'react-native';
 import routes from '../constants/routes';
 import Home from '../screens/home';
 import Repos from '../screens/home/repos';
+import ReadMe from '../screens/home/readme';
 
 const Stack = createStackNavigator();
 const commonScreenOptions = { headerShown: false, cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS }
@@ -18,6 +19,7 @@ const Routes = () => {
             <Stack.Navigator initialRouteName={routes.home} screenOptions={commonScreenOptions}>
                 <Stack.Screen name={routes.home} component={Home} />
                 <Stack.Screen name={routes.repos} component={Repos} />
+                <Stack.Screen name={routes.readMe} component={ReadMe} />
             </Stack.Navigator>
         </NavigationContainer>
     );
