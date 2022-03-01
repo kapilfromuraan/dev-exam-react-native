@@ -1,0 +1,8 @@
+{
+  "replaceAttrValues": {
+    "stroke": "{props.stroke}",
+    "fill": "{props.fill}",
+    "width": "{props.width}",
+    "height": "{props.height}",
+  }
+}
