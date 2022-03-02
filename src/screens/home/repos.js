@@ -5,15 +5,17 @@ import colors from '../../constants/colors';
 import { TextLarge, TextMedium, TextSmall } from '../../components/text';
 import SafeAreaContainer from '../../containers/safe-area-container';
 import Loader from '../../components/loader';
-import { PeopleIcon } from '../../assets/svgs';
+import { PeopleIcon, PeopleLightIcon } from '../../assets/svgs';
 import fonts from '../../constants/fonts';
 import RepositoryCard from '../../components/repo-card';
 import Header from '../../components/header';
+import { useSelector } from 'react-redux';
 
 const Repos = ({ navigation, route }) => {
 
     const { username } = route.params;
     const [owner, setOwner] = useState(null);
+    const { theme } = useSelector(state => state.userDetails);
     const [page, setPage] = useState(1);
     const [hasMore, setHasMore] = useState(true);
     const [loading, setLoading] = useState(false);
@@ -58,7 +60,7 @@ const Repos = ({ navigation, route }) => {
             <View style={{ flex: 1, alignItems: 'flex-start', paddingLeft: 20 }}>
                 <TextMedium align='left'>{owner.name ? `${owner.name} (${owner.login})` : owner.login}</TextMedium>
                 <Row style={{ marginVertical: Platform.OS === 'android' ? 0 : 10 }}>
-                    <PeopleIcon height={20} width={20} />
+                    {theme.title === 'light' ? <PeopleLightIcon height={20} width={20} /> : <PeopleIcon height={20} width={20} />}
                     <TextSmall style={{ fontFamily: fonts.semiBold }} containerStyle={{ marginLeft: 10 }}>{owner.following}</TextSmall>
                     <TextSmall containerStyle={{ marginLeft: 5 }}>Following</TextSmall>
                     <TextSmall style={{ fontFamily: fonts.semiBold }} containerStyle={{ marginLeft: 10 }}>{owner.followers}</TextSmall>
@@ -75,6 +77,7 @@ const Repos = ({ navigation, route }) => {
                 {loading ? <Loader /> :
                     owner ?
                         <FlatList
+                            showsVerticalScrollIndicator={false}
                             onEndReached={() => { if (hasMore) setLoadingMore(true); getMoreRepos() }}
                             ListFooterComponent={loadingMore ? <Loader /> : null}
                             ListHeaderComponent={<><Profile /><TextLarge containerStyle={{ marginVertical: 20 }} align='left'>Repositories</TextLarge></>}
@@ -91,7 +94,7 @@ const Repos = ({ navigation, route }) => {
 }
 
 const styles = StyleSheet.create({
-    container: { flex: 1, backgroundColor: colors.black, paddingHorizontal: 20, paddingTop: 10 }
+    container: { flex: 1, paddingHorizontal: 20, paddingTop: 10 }
 })
 
 export default Repos;

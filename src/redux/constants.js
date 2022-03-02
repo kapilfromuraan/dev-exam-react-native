@@ -1,3 +1,4 @@
 export default {
-    setUser: 'setUser'
+    setUser: 'setUser',
+    toggleTheme: 'toggleTheme',
 }

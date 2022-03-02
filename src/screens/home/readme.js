@@ -8,11 +8,14 @@ import HTML from 'react-native-render-html';
 import { Converter } from 'showdown';
 import SafeAreaContainer from '../../containers/safe-area-container';
 import colors from '../../constants/colors';
+import { useSelector } from 'react-redux';
+import { TextMedium } from '../../components/text';
 
 const ReadMe = ({ route }) => {
 
     const { repo } = route.params;
-    const [readMe, setReadMe] = useState(null);
+    const {theme} = useSelector(state => state.userDetails);
+    const [readMe, setReadMe] = useState('');
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -20,12 +23,13 @@ const ReadMe = ({ route }) => {
         fetch(`https://api.github.com/repos/${repo}/readme`)
             .then(res => res.json())
             .then(respones => {
+                console.log(response)
                 let mdContent = decode(respones?.content || '');
                 let converter = new Converter();
                 setReadMe(converter.makeHtml(mdContent));
                 setLoading(false)
             })
-            .catch(err => console.log('error'))
+            .catch(err => {setLoading(false)})
     }, [])
 
     return (
@@ -38,12 +42,13 @@ const ReadMe = ({ route }) => {
                             contentWidth={layout.window.width}
                             source={{ html: readMe }}
                             tagsStyles={{
-                                body: { color: 'white' },
+                                body: { color: theme.text },
                                 a: { color: colors.blue }
                             }}
                         />
                     </ScrollView>
                 }
+                {readMe === '' && !loading ? <TextMedium>No reaadme content available</TextMedium> : null}
             </View>
         </SafeAreaContainer>
     );

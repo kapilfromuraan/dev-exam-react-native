@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { Platform, StyleSheet, View } from "react-native";
+import { Platform, StyleSheet, TouchableOpacity } from "react-native";
 import { CodeIcon } from '../assets/svgs';
 import colors from '../constants/colors';
 import routes from '../constants/routes';
@@ -9,8 +9,8 @@ import { TextMedium, TextSmall } from "./text";
 
 const RepositoryCard = ({ repo, navigation }) => useMemo(() => {
     return (
-        <View style={styles.container}>
-            <TextMedium onPress={() => navigation.navigate(routes.readMe, {repo: repo.full_name})} style={{ color: colors.blue }} align='left'>{repo.name}</TextMedium>
+        <TouchableOpacity onPress={() => navigation.navigate(routes.readMe, {repo: repo.full_name})} style={styles.container}>
+            <TextMedium style={{ color: colors.blue }} align='left'>{repo.name}</TextMedium>
             {repo.description ? <TextSmall containerStyle={{ marginTop: Platform.OS === 'ios' ? 5 : 0 }} style={{ color: colors.textGray }} align='left'>{repo.description}</TextSmall> : null}
             <Row style={{ marginTop: 10 }}>
                 {repo.language ? <Row>
@@ -19,7 +19,7 @@ const RepositoryCard = ({ repo, navigation }) => useMemo(() => {
                 </Row> : null}
                 <TextSmall containerStyle={{ marginLeft: repo.language ? 10 : 0 }} align='left' style={{ color: colors.textGray }}>{`Updated on ${moment(repo.updated_at).format('DD MMM YYYY')}`}</TextSmall>
             </Row>
-        </View>
+        </TouchableOpacity>
     );
 }, [repo, navigation])
 

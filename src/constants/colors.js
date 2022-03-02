@@ -6,5 +6,6 @@ export default {
     blue: '#58a6ff',
     gray: '#30363d',
     textGray: '#8b949e',
-    transparentWhite: 'rgba(255,255,255, 0.3)'
+    transparentWhite: 'rgba(255,255,255, 0.3)',
+    offWhite: '#f1f3f4'
 };
