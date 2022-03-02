@@ -23,7 +23,6 @@ const ReadMe = ({ route }) => {
         fetch(`https://api.github.com/repos/${repo}/readme`)
             .then(res => res.json())
             .then(respones => {
-                console.log(response)
                 let mdContent = decode(respones?.content || '');
                 let converter = new Converter();
                 setReadMe(converter.makeHtml(mdContent));
